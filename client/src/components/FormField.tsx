@@ -1,13 +1,26 @@
+import { ChangeEvent } from "react";
+
+type Props = {
+  labelName: string;
+  type: string;
+  name: string;
+  placeholder: string;
+  value: string;
+  isSurpriseMe?: boolean;
+  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleSurpriseMe?: () => void;
+};
+
 const FormField = ({
   labelName,
   type,
   name,
   placeholder,
   value,
+  isSurpriseMe = false,
   handleChange,
-  isSurpriseMe,
   handleSurpriseMe,
-}) => {
+}: Props) => {
   return (
     <div>
       <div className="flex items-center gap-2 mb-2">

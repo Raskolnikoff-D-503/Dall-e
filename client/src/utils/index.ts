@@ -13,6 +13,6 @@ export const getRandomPrompt = (prompt: string): string => {
   return randomPrompt;
 };
 
-export const downloadImage = async (_id: string, photo: Blob) => {
+export const downloadImage = async (_id: string, photo: string) => {
   FileSaver.saveAs(photo, `download-${_id}.jpg`);
 };
