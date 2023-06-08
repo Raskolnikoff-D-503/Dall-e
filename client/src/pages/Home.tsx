@@ -1,9 +1,27 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Card, FormField, Loader } from "../components";
 
-const RenderCards = ({ data, title }) => {
+type Post = {
+  _id: string;
+  name: string;
+  prompt: string;
+  photo: string;
+};
+
+type Props = {
+  data: Post[] | null;
+  title: string;
+};
+
+const RenderCards = ({ data, title }: Props) => {
   if (data?.length) {
-    return data.map((post) => <Card key={post._id} {...post} />);
+    return (
+      <>
+        {data.map((post) => (
+          <Card key={post._id} {...post} />
+        ))}
+      </>
+    );
   }
 
   return (
@@ -15,9 +33,9 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>("");
 
-  const [allPosts, setAllPosts] = useState(null);
-  const [searchedResults, setSearchedResults] = useState(null);
-  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [allPosts, setAllPosts] = useState<Post[] | null>(null);
+  const [searchedResults, setSearchedResults] = useState<Post[] | null>([]);
+  const [searchTimeout, setSearchTimeout] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -46,16 +64,21 @@ const Home = () => {
     fetchPosts();
   }, []);
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (searchTimeout) {
+      clearTimeout(searchTimeout);
+    }
+
     setSearchText(e.target.value);
 
     setSearchTimeout(
       setTimeout(() => {
-        const searchResults = allPosts.filter(
-          (item) =>
-            item.name.toLowerCase().includes(searchText.toLowerCase()) ||
-            item.prompt.toLowerCase().includes(searchText.toLowerCase())
-        );
+        const searchResults =
+          allPosts?.filter(
+            (item) =>
+              item.name.toLowerCase().includes(searchText.toLowerCase()) ||
+              item.prompt.toLowerCase().includes(searchText.toLowerCase())
+          ) ?? null;
 
         setSearchedResults(searchResults);
       }, 500)
