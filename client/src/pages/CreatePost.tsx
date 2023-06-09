@@ -4,13 +4,23 @@ import { FormField, Loader } from "../components";
 import { getRandomPrompt } from "../utils";
 import { preview } from "../assets";
 
+type FormType = {
+  name: string;
+  prompt: string;
+  photo: string;
+};
+
 const CreatePost = () => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isGeneratingImg, setIsGeneratingImg] = useState<boolean>(false);
 
-  const [form, setForm] = useState({ name: "", prompt: "", photo: "" });
+  const [form, setForm] = useState<FormType>({
+    name: "",
+    prompt: "",
+    photo: "",
+  });
 
   const generateImage = async () => {
     if (form.prompt) {
