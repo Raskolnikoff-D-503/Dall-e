@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { Card, FormField, Loader, PageTitle } from "../components";
+import { Card, FormField, Loader, PageTitle, SearchTitle } from "../components";
 
 type Post = {
   _id: string;
@@ -111,12 +111,7 @@ const Home = () => {
           </div>
         ) : (
           <>
-            {searchText && (
-              <h2 className="font-medium text-[#666e75] text-xl mb-3">
-                {"Showing result for "}
-                <span className="text-[#222328]">{searchText}</span>
-              </h2>
-            )}
+            {searchText && <SearchTitle title={searchText} />}
             <div className="grid lg:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2 grid-cols-1 gap-3">
               {searchText ? (
                 <RenderCards
