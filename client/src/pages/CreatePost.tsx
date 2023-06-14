@@ -1,8 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FormField, Loader, PageTitle } from "../components";
+import { FormField, Loader, PageTitle, PromptImage } from "../components";
 import { getRandomPrompt } from "../utils";
-import { preview } from "../assets";
 
 type FormType = {
   name: string;
@@ -118,19 +117,7 @@ const CreatePost = () => {
           />
 
           <div className="relative bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-64 p-3 h-64 flex justify-center items-center">
-            {form.photo ? (
-              <img
-                src={form.photo}
-                alt={form.prompt}
-                className="w-full h-full object-contain"
-              />
-            ) : (
-              <img
-                src={preview}
-                alt="preview"
-                className="w-9/12 h-9/12 object-contain opacity-40"
-              />
-            )}
+            <PromptImage photo={form.photo} prompt={form.prompt} />
 
             {isGeneratingImg && (
               <div className="absolute inset-0 z-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] rounded-lg">
